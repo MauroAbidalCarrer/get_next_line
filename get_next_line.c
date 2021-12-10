@@ -6,95 +6,106 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/06 23:20:22 by maabidal         ###   ########.fr       */
+/*   Updated: 2021/12/10 17:34:58 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
+#include<stdio.h>
 
-char	get_back(int fd, size_t already_read)
+ssize_t	ft_read(int fd, char *dest, char *s_buff)
 {
-	ssize_t read_ret;
-	size_t	currently_read;
-	char 	buff[BUFFER_SIZE];
+	char	buff[BUFFER_SIZE + 1];
+	ssize_t	len;
+	ssize_t	i;
 
-	currently_read = 0;
-	while (currently_read < already_read)
+	len = read(fd, buff, BUFFER_SIZE);
+	if (len <= 0)
+		return (1);
+	buff[len] = 0;
+	if (n_index(buff))
+		len = n_index(buff);
+	i = -1;
+	while (++i < len)
+		dest[i] = buff[i];
+	dest[i] = 0;
+	while (buff[i])
 	{
-		read_ret = read(fd, buff, BUFFER_SIZE);
-		if (read_ret <= 0)
-			return (1);
-		currently_read += (size_t)read_ret;
+		s_buff[i - len] = buff[i];
+		i++;
 	}
-	return (0);
+	s_buff[i] = 0;
+	return (len);
 }
 
-void	free_lst(t_node *n)
+char	*get_rest(size_t len, int fd, char *s_buff)
 {
-	free(n->str);
-	if (n->next)
-		free_lst(n->next);
-	free(n);
-}
+	size_t	i;
+	char	bit[BUFFER_SIZE + 1];
+	ssize_t	bit_len;
 
-size_t get_lst(int fd, t_node *n)
-{
-	ssize_t	read_ret;
-	size_t	bytes_read;
-
-	bytes_read = 0;
-	while (1) 
-	{
-		read_ret = read(fd, n->str, BUFFER_SIZE);
-		if (read_ret == -1)
-			return (0);
-		if (index_in(n->str) >= 0)
-			bytes_read += index_in(n->str);
-		else
-			bytes_read += read_ret;
-		if (read_ret != BUFFER_SIZE || index_in(n->str) >= 0)
-			break ;
-		n->next = new_node();
-		if (n->next == NULL)
-			return (0);
-		n = n->next;
-	}
-	return (bytes_read);
-}
-
-char	*join_lst(t_node *n, size_t content_len)
-{
-	char	*line;
-	char	*ptr;
-
-	line = malloc(sizeof(char) * (content_len + 1));
-	if (line == NULL)
+	bit_len = ft_read(fd, s_buff, bit);
+	if (!bit_len)
 		return (NULL);
-	line[content_len] = 0;
-	ptr = line;
-	while (n)
+	len += bit_len;
+	if (bit_len < BUFFER_SIZE)
+		return (r_join(new_str(len) + len, bit, bit_len));
+	return (r_join(get_rest(len, fd, s_buff), bit, bit_len));
+}
+
+char	*get_head(char *prev)
+{
+	size_t	i;
+	char	*head;
+
+	head = prev;
+	while (!*head && head - prev < BUFFER_SIZE)
+		head++;
+	i = n_index(head);
+	if (!i)
+		i = head - prev;
+	head = malloc(sizeof(char) * (i + 1));
+	if (head == NULL)
+		return (NULL);
+	head[i] = 0;
+	while (--i >= 0)
 	{
-		ptr = join(ptr, n->str);
-		n = n->next;	
+		head[i] = prev[i];
+		prev[i] = 0;
 	}
-	return (line);
+	return (head);
 }
 
 char	*get_next_line(int fd)
 {
-	t_node		*head;
-	char		*line;
-	ssize_t		content_len;
-	static size_t	already_read;
+	static char	prev_read[1024][BUFFER_SIZE + 1];
+	char	*head;
+	char	*rest;
+	char	*line;
 
-	if (BUFFER_SIZE == 0 || get_back(fd, already_read))
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
-	head = new_node();
-	content_len = get_lst(fd, head);
-	line = NULL;
-	if (content_len != 0)
-		line = join_lst(head, content_len);
-	already_read += content_len;
-	free_lst(head);
-	return (line);
+	head = get_head(prev_read[fd]);
+	if (head == NULL)
+		return (NULL);
+	if (n_index(head))
+		return (head);
+	rest = get_rest(ft_strlen(head), fd, prev_read[fd]);
+	line = r_join(rest, head, ft_strlen(head));
+	free(head);
+	return (line);     
+}
+
+#include<fcntl.h>
+int main(int ac, char** av)
+{
+	static char buff1[BUFFER_SIZE + 1];
+	static char buff2[BUFFER_SIZE + 1];
+	int fd = open("salut", O_RDONLY);
+	printf("buff1 = %s\n", buff1);
+	printf("buff2 = %s\n", buff2);
+	printf("ft_read = %li\n", ft_read(fd, buff1, buff2));
+	printf("buff1 = %s\n", buff1);
+	printf("buff2 = %s\n", buff2);
+	close(fd);
 }

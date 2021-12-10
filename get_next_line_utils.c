@@ -6,45 +6,66 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/06 23:22:34 by maabidal         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:33:27 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
+#include<stdio.h>
 
-t_node	*new_node()
+char *r_join(char *s1, char *s2, size_t len)
 {
-	t_node	*n;
-
-	n = malloc(sizeof(t_node));
-	if (n != NULL)
-	{
-		n->str = NULL;
-		n->next = NULL;
-	}
-	return (n);
-}
-
-int	index_in(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	while (len-- > 0)
+		*s1-- = s2[len];
+	return (s1);
 }
 
 char	*join(char *s1, char *s2)
 {
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
 	while (*s1)
 		s1++;
 	while (*s2)
 		*s1++ = *s2++;
 	*s1 = 0;
 	return s1;
+}
+
+size_t ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*new_str(size_t len)
+{
+	char	*line;
+
+	line = malloc(sizeof(char) *(1 + len));
+	if (line == NULL)
+		return (NULL);
+	line[len] = 0;
+	*line = 0;
+	return line;
+}
+
+size_t	n_index(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i + 1);
+		i++;
+	}
+	return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/10 19:11:11 by maabidal         ###   ########.fr       */
+/*   Updated: 2021/12/11 20:09:05 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
-#include<stdio.h>
 
 char *r_join(char *s1, char *s2, size_t s2_len)
 {

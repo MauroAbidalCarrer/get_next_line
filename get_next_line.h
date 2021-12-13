@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:27:44 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/10 18:39:14 by maabidal         ###   ########.fr       */
+/*   Updated: 2021/12/11 20:16:03 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include<unistd.h>
 #include<limits.h>
 #include<stdlib.h>
+#ifndef BUFFER_SIZE
 #define BUFFER_SIZE 10
-#define MAX_FD 10
-
+#endif
 char	*get_next_line(int fd);
 char	*join(char *s1, char *s2);
 size_t	ft_strlen(char *str);

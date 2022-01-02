@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/16 16:48:56 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:58:06 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,16 @@ size_t ft_strlen(char *str)
 char	*alloc_line(size_t len)
 {
 	char	*line;
-	int	i;
 
 	if (len == 0)
 		return (NULL);
 	line = malloc(sizeof(char) * (1 + len));
 	if (line == NULL)
 		return (NULL);
-	i = 0;
-	while (i < len)
-		line[i++] = 0;
-	return (line + len - 1);
+	*line = 0;
+	while (len > 0)
+		line[len--] = 0;
+	return (line);
 }
 
 size_t	n_index(char *str)

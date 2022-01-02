@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:27:44 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/16 19:59:23 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:18:53 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 1
 #endif
-#ifndef FD_SIZE
-#define FD_SIZE 1024
+#ifndef MAX_FD
+#define MAX_FD 1024
 #endif
 #ifndef MAX_BS
 #define MAX_BS 82000000

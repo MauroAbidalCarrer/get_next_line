@@ -12,8 +12,13 @@ int main(int ac, char** av)
 	char* line;
 	while ((line = get_next_line(fd)))
 	{
-		printf("%s", line);
+		//printf("%s", line);
 		free(line);
 	}
 	close(fd);
 }
+
+
+
+
+

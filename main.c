@@ -1,3 +1,4 @@
+
 char	*get_next_line(int fd);
 
 #include<fcntl.h>
@@ -16,4 +17,3 @@ int main(int ac, char** av)
 	}
 	close(fd);
 }
-

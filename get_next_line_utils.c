@@ -6,11 +6,12 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2021/12/11 20:09:05 by maabidal         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:48:56 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
+#include<stdio.h>
 
 char *r_join(char *s1, char *s2, size_t s2_len)
 {
@@ -49,13 +50,16 @@ size_t ft_strlen(char *str)
 char	*alloc_line(size_t len)
 {
 	char	*line;
+	int	i;
 
 	if (len == 0)
 		return (NULL);
-	line = malloc(sizeof(char) *(1 + len));
+	line = malloc(sizeof(char) * (1 + len));
 	if (line == NULL)
 		return (NULL);
-	line[len] = 0;
+	i = 0;
+	while (i < len)
+		line[i++] = 0;
 	return (line + len - 1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/02 17:35:57 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:31:04 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 #include<stdio.h>
 ssize_t	ff_read(int fd, char *dest, char *s_buff)
 {
+	ssize_t	r_size;
 	ssize_t	len;
 	ssize_t	i;
 
-	len = read(fd, dest, BUFFER_SIZE);
-	if (len <= 0)
+	r_size = read(fd, dest, BUFFER_SIZE);
+	if (r_size <= 0)
 		return (-1);
-	dest[len] = 0;
+	dest[r_size] = 0;
+	len = r_size;
 	if (n_index(dest))
 		len = n_index(dest);
 	i = len - 1;
-	while (++i < BUFFER_SIZE)
+	while (++i < r_size)
 {
 printf("%c|", dest[i]);
 		s_buff[i - len] = dest[i];
 }
-	if (len < BUFFER_SIZE)
+	if (len < r_size)
 		{printf("\n");}
 	s_buff[i - len] = 0;
 	dest[len] = 0;
@@ -97,7 +99,7 @@ printf("HEAD before read = \"%s\"\n", head);
 	if (n_index(head))
 {
 printf("\n---------------------------------\n");
-printf("line = \"%s\"\n", head);
+printf("LINE = \"%s\"\n", head);
 printf("---------------------------------\n\n\n");
 		return (head);
 }
@@ -108,6 +110,6 @@ printf("---------------------------------\n\n\n");
 	else
 		free(prev_reads[fd]);
 	free(head);
-printf("---------------------------------\nline = \"%s\"\n---------------------------------\n\n\n", line);
+printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
 	return (line);     
 }

@@ -5,17 +5,29 @@ char	*get_next_line(int fd);
 #include<stdlib.h>
 #include<unistd.h>
 #include<stdio.h>
-int main(int ac, char** av)
+
+void read_file(int fd)
 {
-	(void)ac;
-	int fd = open(av[1], O_RDONLY);
-	char* line;
+	char *line;
 	while ((line = get_next_line(fd)))
 	{
 		//printf("%s", line);
 		free(line);
 	}
 	close(fd);
+}
+
+int main(int ac, char** av)
+{
+	if (ac == 1)
+		read_file(0);
+	else
+	{
+		int fd = open(av[1], O_RDONLY);
+		read_file(fd);
+		if (fd != -1)
+			close(fd);
+	}
 }
 
 

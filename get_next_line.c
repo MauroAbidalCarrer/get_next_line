@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/02 18:31:04 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:54:14 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*get_next_line(int fd)
 	head = get_head(prev_reads[fd]);
 	if (head == NULL)
 		return (NULL);
-printf("HEAD before read = \"%s\"\n", head);
+printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
 	if (n_index(head))
 {
 printf("\n---------------------------------\n");

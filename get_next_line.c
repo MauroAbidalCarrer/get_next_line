@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 17:33:26 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:09:08 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,29 @@ ssize_t	ff_read(int fd, char *dest, char *s_buff)
 
 char	*get_rest(size_t len, int fd, char *s_buff)
 {
-	char	bit[BUFFER_SIZE + 1];
+	char	*bit;
+	char	*rest;
 	ssize_t	bit_len;
 
+	bit = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (bit == NULL)
+		return (NULL);
 	bit_len = ff_read(fd, bit, s_buff);
 	if (bit_len == -1 || (len == 0 && bit_len == 0))
+	{
+		free(bit);
 		return (NULL);
+	}
 	len += bit_len;
 	if (bit_len < BUFFER_SIZE || n_index(bit))
-		return (r_join(alloc_line(len) + len - 1, bit, bit_len));
-	return (r_join(get_rest(len, fd, s_buff), bit, bit_len));
+	{
+		rest = r_join(alloc_line(len) + len - 1, bit, bit_len);
+		free(bit);
+		return (rest);
+	}
+	rest = r_join(get_rest(len, fd, s_buff), bit, bit_len);
+	free(bit);
+	return (rest);
 }
 
 char	*get_head(char *prev)
@@ -81,12 +94,12 @@ char	*get_head(char *prev)
 
 char	*get_next_line(int fd)
 {
-	static char	*prev_reads[MAX_FD];
+	static char	*prev_reads[1024];
 	char	*head;
 	char	*rest;
 	char	*line;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || BUFFER_SIZE > MAX_BS || fd >=  MAX_FD)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 1024)
 		return (NULL);
 	if (prev_reads[fd] == NULL)
 		prev_reads[fd] = alloc_line(BUFFER_SIZE);

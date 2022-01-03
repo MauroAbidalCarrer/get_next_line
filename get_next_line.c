@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/02 18:54:14 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:33:26 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ ssize_t	ff_read(int fd, char *dest, char *s_buff)
 	ssize_t	i;
 
 	r_size = read(fd, dest, BUFFER_SIZE);
-	if (r_size <= 0)
+	if (r_size < 0)
 		return (-1);
 	dest[r_size] = 0;
 	len = r_size;
@@ -27,17 +27,17 @@ ssize_t	ff_read(int fd, char *dest, char *s_buff)
 		len = n_index(dest);
 	i = len - 1;
 	while (++i < r_size)
-{
+//{
 //printf("%c|", dest[i]);
 		s_buff[i - len] = dest[i];
-}
-	// if (len < r_size)
-	// 	{printf("\n");}
+//}
+	 if (len < r_size)
+	 	{printf("\n");}
 	s_buff[i - len] = 0;
 	dest[len] = 0;
-	// printf("DEST = \"%s\"\nHEAD = \"%s\"\nLEN = %ld \n", dest, s_buff, len);
-	//if (len < BUFFER_SIZE || n_index(dest))
-	// printf("\n");
+//printf("DEST = \"%s\"\nHEAD = \"%s\"\nLEN = %ld\n\n", dest, s_buff, len);
+//if (len < BUFFER_SIZE || n_index(dest))
+//	printf("\n");
 	return (len);
 }
 
@@ -47,7 +47,7 @@ char	*get_rest(size_t len, int fd, char *s_buff)
 	ssize_t	bit_len;
 
 	bit_len = ff_read(fd, bit, s_buff);
-	if (bit_len == -1)
+	if (bit_len == -1 || (len == 0 && bit_len == 0))
 		return (NULL);
 	len += bit_len;
 	if (bit_len < BUFFER_SIZE || n_index(bit))
@@ -61,7 +61,7 @@ char	*get_head(char *prev)
 	char	*head;
 
 	head = prev;
-	while (!*head && head - prev < BUFFER_SIZE)
+	while (head - prev < BUFFER_SIZE - 1 && !*head)
 		head++;
 	prev = head;
 	i = n_index(head);
@@ -95,21 +95,24 @@ char	*get_next_line(int fd)
 	head = get_head(prev_reads[fd]);
 	if (head == NULL)
 		return (NULL);
-// printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
+//printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
 	if (n_index(head))
-{
-// printf("\n---------------------------------\n");
-// printf("LINE = \"%s\"\n", head);
-// printf("---------------------------------\n\n\n");
+//{
+//printf("\n---------------------------------\n");
+//printf("LINE = \"%s\"\n", head);
+//printf("---------------------------------\n\n\n");
 		return (head);
-}
+//}
 	rest = get_rest(ft_strlen(head), fd, prev_reads[fd]);
 	line = NULL;
 	if (rest != NULL)
 		line = r_join(rest, head, ft_strlen(head)) + 1;
 	else
+	{
 		free(prev_reads[fd]);
+		prev_reads[fd] = NULL;
+	}
+ //printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
 	free(head);
-// printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
 	return (line);     
 }

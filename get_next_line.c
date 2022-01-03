@@ -6,12 +6,12 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 18:09:08 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:12:20 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
-#include<stdio.h>
+
 ssize_t	ff_read(int fd, char *dest, char *s_buff)
 {
 	ssize_t	r_size;
@@ -27,17 +27,9 @@ ssize_t	ff_read(int fd, char *dest, char *s_buff)
 		len = n_index(dest);
 	i = len - 1;
 	while (++i < r_size)
-//{
-//printf("%c|", dest[i]);
 		s_buff[i - len] = dest[i];
-//}
-	 if (len < r_size)
-	 	{printf("\n");}
 	s_buff[i - len] = 0;
 	dest[len] = 0;
-//printf("DEST = \"%s\"\nHEAD = \"%s\"\nLEN = %ld\n\n", dest, s_buff, len);
-//if (len < BUFFER_SIZE || n_index(dest))
-//	printf("\n");
 	return (len);
 }
 
@@ -73,6 +65,8 @@ char	*get_head(char *prev)
 	ssize_t	i;
 	char	*head;
 
+	if (prev == NULL)
+		return (NULL);
 	head = prev;
 	while (head - prev < BUFFER_SIZE - 1 && !*head)
 		head++;
@@ -95,27 +89,19 @@ char	*get_head(char *prev)
 char	*get_next_line(int fd)
 {
 	static char	*prev_reads[1024];
-	char	*head;
-	char	*rest;
-	char	*line;
+	char		*head;
+	char		*rest;
+	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 1024)
 		return (NULL);
 	if (prev_reads[fd] == NULL)
 		prev_reads[fd] = alloc_line(BUFFER_SIZE);
-	if (prev_reads[fd] == NULL)
-		return (NULL);
 	head = get_head(prev_reads[fd]);
 	if (head == NULL)
 		return (NULL);
-//printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
 	if (n_index(head))
-//{
-//printf("\n---------------------------------\n");
-//printf("LINE = \"%s\"\n", head);
-//printf("---------------------------------\n\n\n");
 		return (head);
-//}
 	rest = get_rest(ft_strlen(head), fd, prev_reads[fd]);
 	line = NULL;
 	if (rest != NULL)
@@ -125,7 +111,6 @@ char	*get_next_line(int fd)
 		free(prev_reads[fd]);
 		prev_reads[fd] = NULL;
 	}
- //printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
 	free(head);
-	return (line);     
+	return (line);
 }

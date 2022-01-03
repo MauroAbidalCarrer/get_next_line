@@ -6,14 +6,14 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/02 16:58:06 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:39:29 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
 #include<stdio.h>
 
-char *r_join(char *s1, char *s2, size_t s2_len)
+char	*r_join(char *s1, char *s2, size_t s2_len)
 {
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -34,10 +34,10 @@ char	*join(char *s1, char *s2)
 	while (*s2)
 		*s1++ = *s2++;
 	*s1 = 0;
-	return s1;
+	return (s1);
 }
 
-size_t ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 

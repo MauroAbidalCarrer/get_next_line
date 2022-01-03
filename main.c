@@ -10,7 +10,7 @@ void read_file(int fd)
 	char *line;
 	while ((line = get_next_line(fd)))
 	{
-		//printf("%s", line);
+		printf("%s", line);
 		free(line);
 	}
 	close(fd);
@@ -32,7 +32,7 @@ void read_multiple_files(int nb_files, char** paths)
 				continue ;
 			}
 			char *line = get_next_line(fds[i]);
-			//printf("%s", line);
+			printf("%s", line);
 			if (line == NULL)
 				fds[i] = -2;
 			else

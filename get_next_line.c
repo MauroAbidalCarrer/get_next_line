@@ -28,16 +28,16 @@ ssize_t	ff_read(int fd, char *dest, char *s_buff)
 	i = len - 1;
 	while (++i < r_size)
 {
-printf("%c|", dest[i]);
+//printf("%c|", dest[i]);
 		s_buff[i - len] = dest[i];
 }
-	if (len < r_size)
-		{printf("\n");}
+	// if (len < r_size)
+	// 	{printf("\n");}
 	s_buff[i - len] = 0;
 	dest[len] = 0;
-	printf("DEST = \"%s\"\nHEAD = \"%s\"\nLEN = %ld \n", dest, s_buff, len);
-	if (len < BUFFER_SIZE || n_index(dest))
-	printf("\n");
+	// printf("DEST = \"%s\"\nHEAD = \"%s\"\nLEN = %ld \n", dest, s_buff, len);
+	//if (len < BUFFER_SIZE || n_index(dest))
+	// printf("\n");
 	return (len);
 }
 
@@ -95,12 +95,12 @@ char	*get_next_line(int fd)
 	head = get_head(prev_reads[fd]);
 	if (head == NULL)
 		return (NULL);
-printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
+// printf("FD = %d, HEAD before read = \"%s\"\n", fd, head);
 	if (n_index(head))
 {
-printf("\n---------------------------------\n");
-printf("LINE = \"%s\"\n", head);
-printf("---------------------------------\n\n\n");
+// printf("\n---------------------------------\n");
+// printf("LINE = \"%s\"\n", head);
+// printf("---------------------------------\n\n\n");
 		return (head);
 }
 	rest = get_rest(ft_strlen(head), fd, prev_reads[fd]);
@@ -110,6 +110,6 @@ printf("---------------------------------\n\n\n");
 	else
 		free(prev_reads[fd]);
 	free(head);
-printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
+// printf("---------------------------------\nLINE = \"%s\"\n---------------------------------\n\n\n", line);
 	return (line);     
 }

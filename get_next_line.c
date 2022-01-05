@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:23:03 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 19:12:20 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:05:52 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 		prev_reads[fd] = alloc_line(BUFFER_SIZE);
 	head = get_head(prev_reads[fd]);
 	if (head == NULL)
-		return (NULL);
+		return (free_prev(prev_reads + fd));
 	if (n_index(head))
 		return (head);
 	rest = get_rest(ft_strlen(head), fd, prev_reads[fd]);
@@ -107,10 +107,7 @@ char	*get_next_line(int fd)
 	if (rest != NULL)
 		line = r_join(rest, head, ft_strlen(head)) + 1;
 	else
-	{
-		free(prev_reads[fd]);
-		prev_reads[fd] = NULL;
-	}
+		free_prev(prev_reads + fd);
 	free(head);
 	return (line);
 }

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:27:44 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 19:40:54 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:38:40 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include<unistd.h>
 # include<limits.h>
@@ -20,6 +20,7 @@
 #  define BUFFER_SIZE 1
 # endif
 
+void	*free_prev(char **prev_add);
 char	*get_next_line(int fd);
 char	*join(char *s1, char *s2);
 size_t	ft_strlen(char *str);

@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:27:44 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 19:40:54 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:05:10 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #  define BUFFER_SIZE 1
 # endif
 
+void	*free_prev(char **prev_add);
 char	*get_next_line(int fd);
 char	*join(char *s1, char *s2);
 size_t	ft_strlen(char *str);

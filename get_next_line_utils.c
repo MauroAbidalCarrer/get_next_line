@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 19:29:47 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/03 19:39:29 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:05:34 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,11 @@ char	*r_join(char *s1, char *s2, size_t s2_len)
 	return (s1);
 }
 
-char	*join(char *s1, char *s2)
+void	*free_prev(char **prev_add)
 {
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	while (*s1)
-		s1++;
-	while (*s2)
-		*s1++ = *s2++;
-	*s1 = 0;
-	return (s1);
+	free(*prev_add);
+	*prev_add = NULL;
+	return (NULL);
 }
 
 size_t	ft_strlen(char *str)
